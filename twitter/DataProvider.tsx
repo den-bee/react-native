@@ -14,20 +14,19 @@ export interface Tweet {
     handle: string,
     text: string,
     createdOn: Date,
+    profile?: Profile
 }
 
 export interface DataContext {
     tweets: Tweet[],
-    profiles: Profile[],
     loading: boolean,
     loadData: () => void,
 }
 
-export const DataContext = React.createContext<DataContext>({tweets: [], profiles: [], loading: false, loadData: () => {}});
+export const DataContext = React.createContext<DataContext>({tweets: [], loading: false, loadData: () => {}});
 
 export const DataProvider = ({children} : {children: React.ReactNode}) => {
     const [tweets, setTweets] = useState<Tweet[]>([]);
-    const [profiles, setProfiles] = useState<Profile[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
     const loadData = async () => {
@@ -38,8 +37,12 @@ export const DataProvider = ({children} : {children: React.ReactNode}) => {
         const tweetJson = await tweetData.json();
         const profileJson = await profileData.json();
 
-        setTweets(tweetJson);
-        setProfiles(profileJson);
+        let tweetArray = tweetJson.map((tweet : Tweet) => {
+            tweet.profile = profileJson?.find((profile : Profile) => (tweet.handle === profile.handle))
+            return tweet;
+        })
+
+        setTweets(tweetArray);
     }
 
     useEffect(() => {
@@ -47,7 +50,7 @@ export const DataProvider = ({children} : {children: React.ReactNode}) => {
     }, []);
 
     return (
-        <DataContext.Provider value={{tweets: tweets, profiles: profiles, loadData: loadData, loading: loading}}>
+        <DataContext.Provider value={{tweets: tweets, loadData: loadData, loading: loading}}>
             {children}
         </DataContext.Provider>
     )

@@ -5,11 +5,12 @@ import { rainbow } from "rainbow-colors-array-ts";
 
 interface FooterProps {
     footerContainerStyle?: StyleProp<ViewStyle>,
+    text: string
 }
 
-const Footer = ({footerContainerStyle} : FooterProps) => {
-    const word = "RAINBOW";
-    const colors = rainbow(7, "hex", true);
+const Footer = ({footerContainerStyle, text} : FooterProps) => {
+    const word = text;
+    const colors = rainbow(word.length, "hex", true);
 
     return (
         <View style={footerContainerStyle}>

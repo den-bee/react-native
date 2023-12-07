@@ -5,15 +5,12 @@ import {View, Text, StyleProp, ViewStyle} from "react-native";
 interface RainbowContainerProps {
     rainbowContainerStyle?: StyleProp<ViewStyle>,
     lineColorStyle?: StyleProp<ViewStyle>,
-    amount: number,
+    pastel: boolean,
 }
 
-
-
-
-const Rainbow = ({rainbowContainerStyle, amount, lineColorStyle} : RainbowContainerProps) => {
-    const colors = rainbow(amount, "hex", true);
-
+const Rainbow = ({rainbowContainerStyle, pastel, lineColorStyle} : RainbowContainerProps) => {
+    const colors = rainbow(6, "hex", pastel);
+   
     return (
         <View style={rainbowContainerStyle}>
            {
