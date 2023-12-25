@@ -5,18 +5,18 @@ import { rainbow } from "rainbow-colors-array-ts";
 
 interface FooterProps {
     footerContainerStyle?: StyleProp<ViewStyle>,
-    text: string
+    text: string,
+    colors: string[]
 }
 
-const Footer = ({footerContainerStyle, text} : FooterProps) => {
-    const word = text;
-    const colors = rainbow(word.length, "hex", true);
-
+const Footer = ({footerContainerStyle, text, colors} : FooterProps) => {
+    const word = text.slice(0, 10);
+    
     return (
         <View style={footerContainerStyle}>
             {
                 word.split("").map((letter, index) => (
-                    <Letter letter={letter} letterStyle={{color: colors[index].hex, fontSize: 30, paddingTop: 10}}></Letter>
+                    <Letter key={index} letter={letter} letterStyle={{color: colors[index], fontSize: 30, paddingTop: 10}}></Letter>
                 ))
             }
         </View>
