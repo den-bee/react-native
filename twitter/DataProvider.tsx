@@ -43,6 +43,7 @@ export const DataProvider = ({children} : {children: React.ReactNode}) => {
         })
 
         setTweets(tweetArray);
+        setLoading(false);
     }
 
     useEffect(() => {
